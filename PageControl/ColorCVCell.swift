@@ -1,6 +1,6 @@
 import UIKit
 
-class ColorCVCell: UICollectionViewCell, RegisterableCellProtocol{
+class ColorCVCell: UICollectionViewCell, ReusableCell{
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }

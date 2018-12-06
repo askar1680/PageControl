@@ -1,11 +1,11 @@
 import UIKit
 
-protocol RegisterableCellProtocol: AnyObject {
+protocol ReusableCell: AnyObject {
     static var identifier: String { get }
     static var nibName: String { get }
 }
 
-extension RegisterableCellProtocol where Self: UICollectionViewCell{
+extension ReusableCell where Self: UICollectionViewCell{
     static var identifier: String {
         return NSStringFromClass(self)
     }
@@ -17,10 +17,10 @@ extension RegisterableCellProtocol where Self: UICollectionViewCell{
 }
 
 extension UICollectionView{
-    func register<T: UICollectionViewCell>(_: T.Type) where T: RegisterableCellProtocol{
+    func register<T: UICollectionViewCell>(_: T.Type) where T: ReusableCell{
         register(T.self, forCellWithReuseIdentifier: T.identifier)
     }
-    func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T where T: RegisterableCellProtocol{
+    func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T where T: ReusableCell{
         guard let cell = dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T else {
             fatalError("Can not dequeue \(T.self) with identifier \(T.identifier)")
         }
